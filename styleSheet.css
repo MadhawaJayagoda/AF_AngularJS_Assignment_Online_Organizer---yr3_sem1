@@ -1,0 +1,47 @@
+p.h1{
+    text-align: center;
+    align-content: center;
+    font-size: 40px;
+}
+
+.card.w-80.addEvent{
+    margin: 50px;
+}
+
+.addEvent.btn.btn-success{
+    margin-left: 10px;
+}
+
+.card.viewEvent{
+    margin: 50px;
+}
+
+.card-header.viewEvents{
+    font-size: 20px;
+}
+
+.card-body.viewEvent{
+    align: center;
+    align-items: center;
+    justify-content: center;
+    position: center;
+    top: 50%;
+    left: 50%;
+}
+
+.footerEnd {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    text-align: center;
+}
+
+.jumbotron.text-center{
+    font-family: sans-serif;
+}
+
+li:hover{
+    background-color: #919193;
+    color: #F9F9F9;
+}

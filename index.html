@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html ng-app="mainApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Organizer</title>
+    <link rel="stylesheet" type="text/css" href="styleSheet.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!--Date picker-->
+    <link href="css/%20angular-datepicker.css" rel="stylesheet" type="text/css" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!--FontAwesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--Clock Picker-->
+    <link rel="stylesheet" type="text/css" media="screen" href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+    <script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+    </script>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+
+
+</head>
+<body ng-controller="controllerFile" ng-init="init()">
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!--Date picker-->
+    <script src="js/angular-datepicker.js"></script>
+
+
+    <div class="jumbotron text-center" style="margin-bottom:0">
+        <h1 style="font-size: 50px">Online Organizer</h1>
+        <br>
+    </div>
+
+
+    <br />
+    <br />
+
+<!-- Upcoming Events Section -->
+    <div class="card viewEvent" style="border-color: #bbbbbd">
+        <h5 class="card-header viewEvents"> Upcoming Events </h5>
+        <div class="card" style="background-color: #b3a3c0">
+            <!--<ul>
+                <li ng-repeat="calenderEvent in calenderEvents">{{calenderEvent.eventName}}</li>
+            </ul>-->
+
+            <ul class="list-group" style="margin-right: 25px; margin-bottom: 25px; margin-top: 25px">
+                <li class="list-group-item" style="padding-left: 60px" ng-repeat="calenderEvent in laSortedArr track by $index">
+                    <div style="position: absolute; padding-top: 5px">{{calenderEvent.eventTime}} &nbsp; | &nbsp; {{calenderEvent.eventDate}}
+                        &nbsp; | &emsp; &emsp;  <b>{{calenderEvent.eventName}}</b>
+                    </div>
+                    <span class="float-right">
+                        <span class="float-xs-right" style="position: absolute;  text-align: right; margin-right: 80px; margin-top: 5px; justify-content: right; right: 5px"> Number of days remaining : {{calenderEvent.daysRem}}</span>
+                        <i class="fa fa-clock-o fa-2x" aria-hidden="true" style="float: right; margin-left: 10px"></i>
+                    </span>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+
+<!-- Add Events Section-->
+    <div class="card w-80 addEvent">
+        <div class="card-header">
+            <h4>Add Event</h4>
+        </div>
+        <br />
+        <div class="container">
+            <div class="form-inline">
+                <form>
+                    <div class="form-group">
+                        <span style="float: left"> Event Name : &nbsp;</span>
+                        <input style="margin-left: 5px" class="form-control mr-1 w-80" type="text" ng-model="eventName" placeholder="Enter Event details"/>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <span style="float: left"> Event Date : &nbsp;</span>
+                        <span>
+                            <!--<datepicker>
+                                <i ng-model="date" class="fa fa-calendar" aria-hidden="true" style="font-size: 50px;"></i>
+                            </datepicker>-->
+                            <datepicker date-format="dd-MM-yyyy">
+                                <input ng-model="date" style="margin-left: 10px" type="text" class="form-control mr-1 w-92" ng-keydown="addEventByEnter()"
+                                    placeholder="Select a Date">
+                            </datepicker>
+                        </span>
+                    </div>
+                    <br>
+                    <!--<div datetimez ng-model="var1">
+                        <span style="float: left"> Event Time : &nbsp;</span>
+                        <input ng-model="timeCur" class="w-10" data-format="hh:mm:ss" style="margin-left: 10px" type="text" ng-click="readTime()" readonly/>
+                        <span class="add-on">
+                            <i data-time-icon="icon-time" style="font-size:20px;"></i>
+                        </span>
+                    </div>-->
+
+                    <div datetimez ng-model="var1">
+                        <span style="float: left"> Event Time : &nbsp;</span>
+                        <input data-format="hh:mm:ss" class="w-10" type="text" style="margin-left: 10px" readonly />
+                        <span class="add-on">
+                            <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                        </span>
+                    </div>
+                    <br><br>
+                    <div class="form-group">
+                        <input class="addEvent btn btn-success w-50" type="submit" ng-click="addEventByButton()" value="Add Event" style="margin-left: 60px"/>
+                    </div>
+                    <br /><br>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+<!-- View Event Details -->
+    <div class="card viewEvent">
+        <h5 class="card-header viewEvents"> View Events by Date </h5>
+        <div class="card-body viewEvent" style="background-color: #EAEBED">
+            <form class="form-inline" >
+                <div class="form-group mb-2">
+                    <i class="fa fa-calendar" style="font-size:64px; margin-left: 30px; margin-top: 20px" ></i>
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    <datepicker date-format="MM-dd-yyyy" style="margin-left: 30px; margin-top: 30px">
+                        <input ng-model="dateValue" type="text" style="width: 200px; text-align:  center; font-size: 20px"
+                               class="form-control border border-secondary" ng-change="dateFunc()" placeholder="Select a Date"/>
+                    </datepicker>
+                </div>
+                <div class="card text-white" style="margin-left: 150px;margin-top: 20px; background-color: #3F3842">
+                    <div class="card-body" style="width: 600px; height: 80px">
+                        <p style="margin-top: 10px; text-align: center; font-size: 20px"><b>Events scheduled on : &nbsp; {{formattedDate}}</b></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card" style="background-color: #b3a3c0">
+            <!--<ul>
+                <li ng-repeat="calenderEvent in calenderEvents">{{calenderEvent.eventName}}</li>
+            </ul>-->
+
+            <ul class="list-group" style="margin-right: 25px; margin-bottom: 25px; margin-top: 25px">
+                <li class="list-group-item" style="padding-left: 60px" ng-repeat="calenderEvent in calenderEvents | filter: filterDate |
+                        orderBy: 'eventDate': false track by $index">
+                    <div style="position: absolute; padding-top: 10px">{{calenderEvent.eventTime}} &nbsp; | &nbsp; {{calenderEvent.eventDate}}
+                        &nbsp; | &emsp; &emsp;  <b>{{calenderEvent.eventName}}</b></div>
+                    <span class="badge float-right">
+                        <i class="fa fa-trash btn btn-danger" ng-click="deleteEvent($index)" aria-hidden="true" style="float: right; margin-left: 10px"></i>
+                        <i class="fa fa-pencil btn btn-success" ng-click="updateEvent($index)" aria-hidden="true" style="float: right"></i>
+                    </span>
+
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <!--    <div class="form-group">
+            <span style="float: left"> Event Date : &nbsp;</span>
+            <span>
+                            &lt;!&ndash;<datepicker>
+                                <i ng-model="date" class="fa fa-calendar" aria-hidden="true" style="font-size: 50px;"></i>
+                            </datepicker>&ndash;&gt;
+                            <datepicker date-format="dd-MM-yyyy">
+                                <input ng-model="date" style="margin-left: 14px" type="text" class="form-control mr-1 w-80" ng-click="viewDate()">
+                            </datepicker>
+                        </span>
+        </div>-->
+
+  <!--  <div>
+        <input type="text" ng-click="sortedArray()" >
+    </div>-->
+
+    <div>
+        <div id="footerEnd">
+            <p></p>
+        </div>
+        <p style="height: 10px"></p>
+    </div>
+
+</body>
+</html>
